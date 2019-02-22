@@ -1,7 +1,15 @@
 {
   "name": "reactopus",
+  "productName": "How to React",
+  "description": "Personal approach to React",
+  "author": "Poliakov Maksym <polmax09@gmail.com>",
+  "license": "MIT",
   "version": "0.1.0",
   "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PoliakovMaksym/reactopus.git"
+  },
   "dependencies": {
     "@types/jest": "24.0.6",
     "@types/node": "11.9.4",
