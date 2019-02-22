@@ -16,10 +16,17 @@
     "react-scripts": "2.1.5"
   },
   "devDependencies": {
+    "@types/enzyme": "^3.1.18",
+    "@types/enzyme-adapter-react-16": "^1.0.4",
     "@types/jest": "24.0.6",
+    "@types/jsdom": "^12.2.2",
     "@types/node": "11.9.4",
     "@types/react": "16.8.4",
     "@types/react-dom": "16.8.2",
+    "enzyme": "^3.9.0",
+    "enzyme-adapter-react-16": "^1.9.1",
+    "enzyme-to-json": "^3.3.5",
+    "react-test-renderer": "^16.8.3",
     "typescript": "3.3.3333"
   },
   "scripts": {
@@ -27,6 +34,11 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
+  },
+  "jest": {
+    "snapshotSerializers": [
+      "enzyme-to-json/serializer"
+    ]
   },
   "browserslist": [
     ">0.2%",
