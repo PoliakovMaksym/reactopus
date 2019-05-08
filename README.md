@@ -4,7 +4,7 @@
 [![TravisCI](https://img.shields.io/travis/PoliakovMaksym/reactopus/master.svg)](https://travis-ci.org/PoliakovMaksym/reactopus)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-green.svg)](https://github.com/PoliakovMaksym/reactopus/pulls)
 
-[![create-react-app](https://img.shields.io/badge/create--react--app-2.1.8-d54b89.svg)](https://github.com/facebook/create-react-app)
-[![React](https://img.shields.io/badge/react-16.8.4-blueviolet.svg)](https://reactjs.org/)
+[![create-react-app](https://img.shields.io/badge/create--react--app-3.0.0-d54b89.svg)](https://github.com/facebook/create-react-app)
+[![React](https://img.shields.io/badge/react-16.8.6-blueviolet.svg)](https://reactjs.org/)
 [![Types](https://img.shields.io/npm/types/typescript.svg)](https://www.typescriptlang.org/)
 [![Code style](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
