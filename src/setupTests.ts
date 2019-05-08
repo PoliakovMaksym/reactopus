@@ -6,6 +6,6 @@ Enzyme.configure({ adapter: new Adapter() });
 
 const { document } = new jsdom.JSDOM('<!doctype html><html><body></body></html>').window;
 
-global.document = document;
-global.window = document.defaultView;
-global.navigator = global.window.navigator;
+(global as any).document = document;
+(global as any).window = document.defaultView;
+(global as any).navigator = (global as any).window.navigator;
