@@ -1,15 +1,7 @@
-import { History, Path, LocationDescriptorObject } from 'history';
+import { History, Path } from 'history';
+import { Navigation as NavigationService, Options } from './Navigation.types';
 
-interface Options extends LocationDescriptorObject {
-  urlParams?: { [key: string]: string | number };
-}
-
-interface Navigation {
-  init(history: History): void;
-  goTo(path: Path, options?: Options): void;
-}
-
-export const Navigation = ((): Navigation => {
+export const Navigation: NavigationService = (() => {
   let history: History;
 
   const isNavigationInitialized = (): boolean => {

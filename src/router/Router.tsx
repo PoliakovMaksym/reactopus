@@ -3,8 +3,8 @@ import { createBrowserHistory, History } from 'history';
 import { Redirect, Route, Router as ReactRouter, Switch } from 'react-router-dom';
 
 import * as Pages from 'pages';
-import { Navigation } from '../Navigation';
-import { ROUTES } from '../constants';
+import { Navigation } from 'services';
+import { ROUTES } from './constants';
 
 // Create a history of your choosing (we're using a browser history in this case)
 const history: History = createBrowserHistory();
@@ -12,7 +12,7 @@ const history: History = createBrowserHistory();
 // Initialize navigation service
 Navigation.init(history);
 
-export const Router: React.FunctionComponent = () => (
+export const Router = () => (
   <ReactRouter history={history}>
     <Switch>
       <Route exact path={ROUTES.page0} component={Pages.Page0} />

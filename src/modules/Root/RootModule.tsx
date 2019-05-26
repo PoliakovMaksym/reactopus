@@ -1,6 +1,7 @@
 import React from 'react';
 
-import { Router, Navigation, ROUTES } from 'routing';
+import { Navigation } from 'services';
+import { Router, ROUTES } from 'router';
 
 export class RootModule extends React.Component {
   goToPage2 = () => {
