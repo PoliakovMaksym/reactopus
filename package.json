@@ -11,8 +11,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
-    "report-coverage": "coveralls < ./coverage/lcov.info"
+    "test": "react-scripts test"
   },
   "dependencies": {
     "react": "16.8.6",
@@ -25,8 +24,8 @@
     "@types/enzyme-adapter-react-16": "1.0.5",
     "@types/jest": "24.0.13",
     "@types/jsdom": "12.2.3",
-    "@types/node": "12.0.2",
-    "@types/react": "16.8.18",
+    "@types/node": "12.0.4",
+    "@types/react": "16.8.19",
     "@types/react-dom": "16.8.4",
     "@types/react-router-dom": "4.3.3",
     "coveralls": "3.0.3",
@@ -35,7 +34,7 @@
     "enzyme-to-json": "3.3.5",
     "prettier": "1.17.1",
     "react-test-renderer": "16.8.6",
-    "typescript": "3.4.5"
+    "typescript": "3.5.1"
   },
   "jest": {
     "collectCoverageFrom": [
