@@ -1,66 +1,66 @@
-import { Navigation } from './Navigation';
+import { History } from 'history';
+import { NavigationClass } from './Navigation';
 
-describe('Navigation', () => {
-  //<editor-fold desc="setup">
-  const history = {
-    push: jest.fn(),
-  };
+describe('Navigation service', () => {
+  it('should save history internally on construction', () => {
+    const Navigation = new NavigationClass({ thisIs: 'history object' } as any);
 
-  Navigation.init(history as any);
-
-  beforeEach(() => {
-    history.push.mockClear();
+    expect(Navigation.history).toEqual({ thisIs: 'history object' });
   });
-  //</editor-fold>
 
-  describe('when goTo method is called should correctly call history.push', () => {
-    it('when only path is passed', () => {
-      const path = 'test path';
+  describe('goTo method', () => {
+    it('should call history.replace by default', () => {
+      const history = ({ replace: jest.fn(), push: jest.fn() } as unknown) as History;
+      const Navigation = new NavigationClass(history);
 
-      Navigation.goTo(path);
+      Navigation.goTo('');
 
-      expect(history.push).toHaveBeenCalledTimes(1);
-      expect(history.push).toHaveBeenCalledWith({ pathname: path });
+      expect(history.replace).toHaveBeenCalled();
+      expect(history.push).not.toHaveBeenCalled();
     });
 
-    it('when path without params and urlParams are passed', () => {
-      const path = 'test path';
-      const urlParams = { id: 15 };
+    it('should call history.replace once when persistState = false', () => {
+      const history = ({ replace: jest.fn(), push: jest.fn() } as unknown) as History;
+      const Navigation = new NavigationClass(history);
 
-      Navigation.goTo(path, { urlParams });
+      Navigation.goTo('', { persistState: false });
 
-      expect(history.push).toHaveBeenCalledTimes(1);
-      expect(history.push).toHaveBeenCalledWith({ pathname: path });
+      expect(history.replace).toHaveBeenCalledTimes(1);
+      expect(history.push).not.toHaveBeenCalled();
     });
 
-    it('when path with params and urlParams are passed', () => {
-      const path = '/part1/:param1/part2/:param2';
-      const urlParams = { param1: 15 };
+    it('should call history.push once when persistState = true', () => {
+      const history = ({ replace: jest.fn(), push: jest.fn() } as unknown) as History;
+      const Navigation = new NavigationClass(history);
 
-      Navigation.goTo(path, { urlParams });
+      Navigation.goTo('', { persistState: true });
 
       expect(history.push).toHaveBeenCalledTimes(1);
-      expect(history.push).toHaveBeenCalledWith({
-        pathname: path.replace(':param1', `${urlParams.param1}`),
+      expect(history.replace).not.toHaveBeenCalled();
+    });
+
+    it('should correctly replace route params with values when urlParams are specified', () => {
+      const history = ({ replace: jest.fn() } as unknown) as History;
+      const Navigation = new NavigationClass(history);
+
+      Navigation.goTo('part1/:param1/part2/:param2', {
+        urlParams: {
+          param1: 15,
+          param2: '50',
+          param3: '',
+        },
       });
+
+      expect(history.replace).toHaveBeenCalledWith({ pathname: 'part1/15/part2/50' });
     });
 
-    it('when path and other location props are passed', () => {
-      const path = 'test path';
-      const locationDescriptor = {
-        pathname: 'pathname',
-        state: { stateProp1: 'state value 1' },
-      };
+    it('should pass location props down to the history "redirect" method', () => {
+      const history = ({ replace: jest.fn() } as unknown) as History;
+      const Navigation = new NavigationClass(history);
 
-      Navigation.goTo(path, locationDescriptor);
+      Navigation.goTo('path', { state: { key: 'value' } });
 
-      const { pathname, ...restLocationProps } = locationDescriptor;
-
-      expect(history.push).toHaveBeenCalledTimes(1);
-      expect(history.push).toHaveBeenCalledWith({
-        pathname: path,
-        ...restLocationProps,
-      });
+      expect(history.replace).toHaveBeenCalledWith({ pathname: 'path', state: { key: 'value' } });
     });
   });
 });

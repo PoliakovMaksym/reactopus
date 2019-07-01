@@ -1,35 +1,35 @@
-import { History, Path } from 'history';
+import { createBrowserHistory, History, Path } from 'history';
+
 import { Navigation as NavigationService, Options } from './Navigation.types';
 
-export const Navigation: NavigationService = (() => {
-  let history: History;
+// Create a history of your choosing (we're using a browser history in this case)
+const history: History = createBrowserHistory();
 
-  const isNavigationInitialized = (): boolean => {
-    return !!history;
-  };
+export class NavigationClass {
+  readonly history: History;
 
-  const init = (value: History): void => {
-    if (!isNavigationInitialized()) {
-      history = value;
+  constructor(history: History) {
+    this.history = history;
+  }
+
+  goTo(path: Path, options: Options = {}): void {
+    const { urlParams, persistState, ...locationDescriptor } = options;
+
+    let pathname = path;
+    if (urlParams) {
+      // Replace all the path params (for example `/:id`) with their values
+      // Example: path "/users/:id" becomes "/users/15"
+      Object.keys(urlParams).forEach(urlParamKey => {
+        pathname = pathname.replace(`:${urlParamKey}`, `${urlParams[urlParamKey]}`);
+      });
     }
-  };
 
-  const goTo = (path: Path, options: Options = {}): void => {
-    if (isNavigationInitialized()) {
-      const { urlParams, ...locationDescriptor } = options;
+    // Determine redirect strategy
+    const redirectFunction = persistState ? this.history.push : this.history.replace;
 
-      let pathname = path;
-      if (urlParams) {
-        // Replace all the path params (for example `/:id`) with values
-        Object.keys(urlParams).forEach(urlParamKey => {
-          pathname = pathname.replace(`:${urlParamKey}`, `${urlParams[urlParamKey]}`);
-        });
-      }
+    // TODO: maybe don't redirect if pathname, state, etc. are completely the same
+    redirectFunction({ ...locationDescriptor, pathname });
+  }
+}
 
-      // TODO: maybe don't push if pathname, state, etc. is the same
-      history.push({ ...locationDescriptor, pathname });
-    }
-  };
-
-  return { init, goTo };
-})();
+export const Navigation: NavigationService = new NavigationClass(history);
