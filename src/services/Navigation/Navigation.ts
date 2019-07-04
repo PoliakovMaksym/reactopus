@@ -1,9 +1,5 @@
 import { createBrowserHistory, History, Path } from 'history';
-
-import { Navigation as NavigationService, Options } from './Navigation.types';
-
-// Create a history of your choosing (we're using a browser history in this case)
-const history: History = createBrowserHistory();
+import { NavigationService, Options } from './Navigation.types';
 
 export class NavigationClass {
   readonly history: History;
@@ -13,12 +9,13 @@ export class NavigationClass {
   }
 
   goTo(path: Path, options: Options = {}): void {
+    // Separate custom options from default history.push/replace options
     const { urlParams, persistState, ...locationDescriptor } = options;
 
     let pathname = path;
     if (urlParams) {
-      // Replace all the path params (for example `/:id`) with their values
-      // Example: path "/users/:id" becomes "/users/15"
+      // Replace all the path params with their values
+      // Example: given urlParams = { id: 15 } path "/users/:id" becomes "/users/15"
       Object.keys(urlParams).forEach(urlParamKey => {
         pathname = pathname.replace(`:${urlParamKey}`, `${urlParams[urlParamKey]}`);
       });
@@ -32,4 +29,8 @@ export class NavigationClass {
   }
 }
 
+// Create a history of your choosing (we're using a browser history in this case)
+const history: History = createBrowserHistory();
+
+// Create a Navigation service
 export const Navigation: NavigationService = new NavigationClass(history);

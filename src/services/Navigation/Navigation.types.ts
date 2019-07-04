@@ -5,7 +5,7 @@ export type Options = LocationDescriptorObject & {
   persistState?: boolean;
 };
 
-export type Navigation = {
+export type NavigationService = {
   readonly history: History;
   goTo(path: Path, options?: Options): void;
 };
