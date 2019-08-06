@@ -1,5 +1,5 @@
 import { createBrowserHistory, History, Path } from 'history';
-import { NavigationService, Options } from './Navigation.types';
+import { Navigation as NavigationService, Options } from './Navigation.types';
 
 export class NavigationClass {
   readonly history: History;
@@ -10,7 +10,7 @@ export class NavigationClass {
 
   goTo(path: Path, options: Options = {}): void {
     // Separate custom options from default history.push/replace options
-    const { urlParams, persistState, ...locationDescriptor } = options;
+    const { urlParams, ...locationDescriptor } = options;
 
     let pathname = path;
     if (urlParams) {
@@ -21,11 +21,8 @@ export class NavigationClass {
       });
     }
 
-    // Determine redirect strategy
-    const redirectFunction = persistState ? this.history.push : this.history.replace;
-
     // TODO: maybe don't redirect if pathname, state, etc. are completely the same
-    redirectFunction({ ...locationDescriptor, pathname });
+    this.history.push({ ...locationDescriptor, pathname });
   }
 }
 
@@ -33,4 +30,4 @@ export class NavigationClass {
 const history: History = createBrowserHistory();
 
 // Create a Navigation service
-export const Navigation: NavigationService = new NavigationClass(history);
+export const Navigation: Readonly<NavigationService> = new NavigationClass(history);
