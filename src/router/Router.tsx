@@ -5,7 +5,7 @@ import * as Pages from 'pages';
 import { Navigation } from 'services';
 import { ROUTES } from './constants';
 
-export const Router = () => (
+export const Router: React.FC = () => (
   <ReactRouter history={Navigation.history}>
     <Switch>
       <Route exact path={ROUTES.page0} component={Pages.Page0} />
